@@ -7,96 +7,112 @@
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
-  overflow:hidden;
-  font-family:system-ui,-apple-system,sans-serif;
-  background:linear-gradient(135deg,#ff9a9e 0%,#fecfef 50%,#fecfef 100%);
-  height:100vh;
-  position:relative;
+  overflow:hidden; font-family:system-ui,-apple-system,sans-serif;
+  background:linear-gradient(135deg,#ff9a9e 0%,#fecfef 50%,#fad0c4 100%);
+  height:100vh; position:relative;
+}
+.ground {
+  position:absolute; bottom:0; left:0; width:100%; height:60px;
+  background:linear-gradient(to right, #8B4513, #D2691E); border-radius:30px 30px 0 0;
 }
 #panda {
-  position:absolute; bottom:30px; left:-120px; width:100px; 
-  transition:left 2s ease-out; z-index:2;
+  position:absolute; bottom:30px; left:-150px; width:120px;
+  transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  filter: drop-shadow(3px 5px 10px rgba(0,0,0,0.3));
 }
+#panda.active { left:38% !important; bottom:80px; transform:rotate(5deg) scale(1.05); }
 #rope {
-  position:absolute; top:0; left:50%; transform:translateX(-50%);
-  width:8px; height:200px; background:#333; cursor:pointer;
-  border-radius:4px; box-shadow:0 0 10px rgba(0,0,0,0.3);
+  position:absolute; top:20px; left:50%; transform:translateX(-50%);
+  width:12px; height:180px; background:#4a4a4a; cursor:pointer;
+  border-radius:6px; box-shadow:0 0 15px rgba(0,0,0,0.4);
 }
+#rope.active { background:#ff4d6d; box-shadow:0 0 25px #ff4d6d; }
 #banner {
-  position:absolute; top:-200px; left:50%; transform:translateX(-50%);
-  background:#ff4d6d; color:white; padding:20px 40px; font-size:2em;
-  border-radius:12px; text-align:center; transition:top 1s ease;
-  box-shadow:0 10px 30px rgba(255,77,109,0.4);
+  position:absolute; top:-250px; left:50%; transform:translateX(-50%);
+  background:linear-gradient(45deg, #ff4d6d, #ff6b9d); color:white;
+  padding:25px 50px; font-size:2.3em; border-radius:20px; text-align:center;
+  font-weight:700; transition:all 0.8s ease; box-shadow:0 15px 40px rgba(255,77,109,0.5);
+  letter-spacing:2px;
 }
+#banner.active { top:60px; transform:translateX(-50%) scale(1.05); }
 #message {
-  position:absolute; top:220px; width:100%; text-align:center;
-  font-size:1.3em; color:#444; opacity:0; transition:opacity 1s;
-  padding:20px; line-height:1.6;
+  position:absolute; top:280px; width:90%; margin:0 5%; text-align:center;
+  font-size:1.35em; color:#333; opacity:0; transition:opacity 1.5s ease;
+  line-height:1.7; font-weight:500; padding:20px;
 }
+#message.active { opacity:1; }
 #help {
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  background:rgba(0,0,0,0.8); color:white; padding:15px 25px;
-  border-radius:10px; font-size:1.1em; opacity:0; transition:opacity 0.5s;
+  position:absolute; top:45%; left:50%; transform:translate(-50%,-50%);
+  background:rgba(255,77,109,0.95); color:white; padding:20px 30px;
+  border-radius:15px; font-size:1.2em; opacity:0; transition:opacity 0.5s;
+  text-align:center; box-shadow:0 10px 30px rgba(255,77,109,0.4);
 }
 .confetti {
-  position:absolute; width:10px; height:10px; background:#ff4d6d;
-  border-radius:50%; top:-10px; animation:fall 3s linear infinite;
+  position:absolute; width:12px; height:12px; border-radius:50%;
+  top:-20px; pointer-events:none; animation:fall 2.5s linear infinite;
 }
 @keyframes fall {
-  to { transform:translateY(110vh) rotate(720deg); }
+  to { transform:translateY(120vh) rotate(1080deg) scale(0); }
 }
-.pulse { animation:pulse 0.5s infinite; }
-@keyframes pulse {
-  0%,100%{ transform:scale(1); }
-  50%{ transform:scale(1.1); }
+.shake { animation:shake 0.5s ease-in-out; }
+@keyframes shake {
+  0%,100%{ transform:translateX(0); }
+  25%{ transform:translateX(-5px); }
+  75%{ transform:translateX(5px); }
 }
 </style>
 </head>
 <body>
-
+<div class="ground"></div>
 <img id="panda" src="https://cdn-icons-png.flaticon.com/512/616/616408.png">
 <div id="rope"></div>
 <div id="banner">🎉 Happy Birthday Vamika 🎉</div>
 <div id="message">
-✨ Dear Vamika ✨<br><br>
-Aaj ka din sirf tumhara hai 💖<br>
-Tumhari smile duniya ko beautiful banati 🌸<br>
-Har khushi mile, har sapna pura ho ✨<br><br>
-You deserve all the love ❤️<br>
-Stay khush always! 💫<br><br>
-💌 Happy Birthday 💌
+✨ <b>Dear Vamika</b> ✨<br><br>
+Aaj ka din sirf <b>tumhara</b> hai 💖<br>
+Tumhari smile duniya ko aur <b>beautiful</b> banati 🌸<br>
+Har khushi mile, har sapna <b>pura</b> ho ✨<br><br>
+You are <b>truly special</b> ❤️<br>
+Stay <b>khush</b> hamesha! 💫<br><br>
+💌 <b>Happy Birthday once again!</b> 💌
 </div>
-<div id="help">🐼 Tap rope 3 times to help Panda!</div>
 
 <script>
-let clicks=0;
-document.getElementById('panda').style.left='40%';
+let done=false;
 document.getElementById('rope').onclick=()=>{
-  clicks++;
-  document.getElementById('panda').style.bottom='70px';
-  setTimeout(()=>document.getElementById('panda').style.bottom='30px',200);
+  if(done) return;
+  done=true;
   
-  if(clicks===2) document.getElementById('help').style.opacity=1;
-  if(clicks===3){
-    document.getElementById('help').style.opacity=0;
-    document.getElementById('rope').classList.add('pulse');
-    document.getElementById('banner').style.top='80px';
-    setTimeout(()=>document.getElementById('message').style.opacity=1,800);
-    
-    // Confetti
-    for(let i=0;i<60;i++){
+  // Panda jumps in from back
+  document.getElementById('panda').classList.add('active');
+  
+  // Rope glows
+  document.getElementById('rope').classList.add('active');
+  document.getElementById('rope').classList.add('shake');
+  
+  // 🎵 Mobile-friendly sound + vibration
+  navigator.vibrate?.([200,100,200]);
+  let beep=new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAo');
+  beep.play().catch(()=>{}); // Silent fail on mobile
+  
+  // Banner drops
+  setTimeout(()=>document.getElementById('banner').classList.add('active'),300);
+  
+  // Message appears
+  setTimeout(()=>document.getElementById('message').classList.add('active'),1000);
+  
+  // 🎊 Confetti explosion
+  setTimeout(()=>{
+    for(let i=0;i<100;i++){
       let c=document.createElement('div');
       c.className='confetti';
       c.style.left=Math.random()*100+'vw';
-      c.style.background=`hsl(${Math.random()*360},100%,60%)`;
-      c.style.animationDuration=(2+Math.random()*2)+'s';
+      c.style.background=`hsl(${i*3.6},100%,60%)`;
+      c.style.animationDuration=(1.5+Math.random()*2)+'s';
+      c.style.animationDelay=Math.random()*0.5+'s';
       document.body.appendChild(c);
     }
-    
-    // 🎵 Sound Effect (no external file needed)
-    let audio=new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAo');
-    audio.play();
-  }
+  },1200);
 };
 </script>
 </body>
