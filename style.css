@@ -12,27 +12,80 @@ body {
   background: linear-gradient(#ffd6e0, #fff);
 }
 
-/* House */
+/* 🍫 HOUSE */
 .house {
   position: absolute;
   bottom: 50px;
   left: 50px;
-  width: 200px;
-  animation: houseMove 3s infinite ease-in-out;
+  width: 150px;
+  height: 120px;
+  background: #5c2c06;
+  border-radius: 10px;
+  animation: houseBounce 3s infinite;
 }
 
-@keyframes houseMove {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+.roof {
+  position: absolute;
+  top: -60px;
+  width: 0;
+  height: 0;
+  border-left: 80px solid transparent;
+  border-right: 80px solid transparent;
+  border-bottom: 60px solid #3b1f00;
 }
 
-/* Panda */
+.door {
+  position: absolute;
+  bottom: 0;
+  left: 50px;
+  width: 40px;
+  height: 60px;
+  background: #3b1f00;
+  border-radius: 10px;
+}
+
+@keyframes houseBounce {
+  50% { transform: translateY(-8px); }
+}
+
+/* 🐼 PANDA */
 #panda {
   position: absolute;
   bottom: 50px;
-  left: 80px;
-  width: 120px;
+  left: 70px;
+  width: 100px;
+  height: 100px;
   transition: 1s;
+}
+
+.face {
+  width: 100px;
+  height: 100px;
+  background: white;
+  border-radius: 50%;
+  position: relative;
+}
+
+.eye {
+  width: 20px;
+  height: 25px;
+  background: black;
+  position: absolute;
+  top: 30px;
+  border-radius: 50%;
+}
+
+.left { left: 20px; }
+.right { right: 20px; }
+
+.nose {
+  width: 10px;
+  height: 10px;
+  background: black;
+  position: absolute;
+  bottom: 30px;
+  left: 45px;
+  border-radius: 50%;
 }
 
 /* Rope */
@@ -40,9 +93,10 @@ body {
   position: absolute;
   top: 0;
   right: 80px;
-  width: 6px;
+  width: 20px;
   height: 200px;
   background: brown;
+  z-index: 10;
 }
 
 /* Help */
