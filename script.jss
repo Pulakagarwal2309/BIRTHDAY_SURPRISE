@@ -5,60 +5,78 @@ const banner = document.getElementById("banner");
 const msg = document.getElementById("msg");
 const music = document.getElementById("music");
 
-/* Panda walk */
+let triggered = false;
+
+/* 🐼 Panda walk */
 setTimeout(() => {
   panda.style.left = "250px";
 }, 1000);
 
-/* Jump animation */
+/* 🐼 Jump animation */
 let jumps = 0;
 let jumpAnim = setInterval(() => {
   panda.style.bottom = "120px";
-  setTimeout(() => panda.style.bottom = "50px", 300);
+
+  setTimeout(() => {
+    panda.style.bottom = "50px";
+  }, 300);
 
   jumps++;
-  if (jumps == 3) {
+
+  if (jumps >= 3) {
     clearInterval(jumpAnim);
-    help.style.display = "block";
+    help.style.display = "block"; // ✅ FIXED
   }
 }, 800);
 
-/* Drag (Mobile + PC) */
-let dragging = false;
+/* 🪢 DRAG FIX (WORKING FOR BOTH MOBILE + PC) */
+let isDragging = false;
 
-rope.addEventListener("mousedown", () => dragging = true);
-rope.addEventListener("touchstart", () => dragging = true);
+rope.addEventListener("mousedown", () => isDragging = true);
+rope.addEventListener("touchstart", () => isDragging = true);
 
-document.addEventListener("mouseup", () => dragging = false);
-document.addEventListener("touchend", () => dragging = false);
+document.addEventListener("mouseup", () => isDragging = false);
+document.addEventListener("touchend", () => isDragging = false);
 
-document.addEventListener("mousemove", moveRope);
-document.addEventListener("touchmove", moveRope);
+document.addEventListener("mousemove", dragRope);
+document.addEventListener("touchmove", dragRope);
 
-function moveRope(e) {
-  if (!dragging) return;
+function dragRope(e) {
+  if (!isDragging || triggered) return;
 
-  let y = e.clientY || e.touches[0].clientY;
+  let y = e.clientY || (e.touches && e.touches[0].clientY);
+
+  if (!y) return;
+
   rope.style.height = y + "px";
 
-  if (y > 300) trigger();
+  // 🎯 Trigger condition
+  if (y > 300) {
+    triggered = true;
+    triggerSurprise();
+  }
 }
 
-/* Surprise */
-function trigger() {
+/* 🎉 Surprise */
+function triggerSurprise() {
   banner.style.top = "20px";
   help.style.display = "none";
-  music.play();
+
+  music.play().catch(() => {
+    console.log("User interaction needed");
+  });
+
   typeText();
 }
 
-/* Typing */
-let text = "You are a truly amazing person 🌸\nStay happy, keep smiling and keep shining ✨\nWishing you a day full of happiness 🎂";
+/* ✍️ Typing message */
+let text = "You are truly special 🌸\nStay happy and keep smiling always ✨\nWishing you a beautiful birthday 🎂";
 
 let i = 0;
+
 function typeText() {
   if (i < text.length) {
-    msg.innerHTML += text[i];
+    msg.innerHTML += text[i] === "\n" ? "<br>" : text[i];
     i++;
     setTimeout(typeText, 40);
   }
