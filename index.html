@@ -1,49 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Happy Birthday 🎉</title>
+  <title>Birthday Surprise 🎉</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<audio id="music" src="song.mp3" loop></audio>
+<audio id="music" src="song.mp3"></audio>
 
-<div class="background"></div>
+<div class="bg"></div>
 
-<!-- Chocolate House -->
-<div class="house"></div>
+<img src="house.png" class="house">
 
-<!-- Rope -->
+<img src="panda.png" id="panda">
+
 <div id="rope"></div>
 
-<!-- Panda -->
-<div id="panda">🐼</div>
+<div id="help">Help! Pull the rope 🪢</div>
 
-<!-- Help Text -->
-<div id="helpText">Help! Pull the rope down 🪢</div>
-
-<!-- Banner -->
 <div id="banner">🎉 Happy Birthday Vamika 🎉</div>
 
-<!-- Message -->
-<div id="message"></div>
-
-<!-- Confetti -->
-<div id="confetti"></div>
+<div id="msg"></div>
 
 <script src="script.js"></script>
-</body>
-</html>      let c=document.createElement('div');
-      c.className='confetti';
-      c.style.left=Math.random()*100+'vw';
-      c.style.background=`hsl(${i*3.6},100%,60%)`;
-      c.style.animationDuration=(1.5+Math.random()*2)+'s';
-      c.style.animationDelay=Math.random()*0.5+'s';
-      document.body.appendChild(c);
-    }
-  },1200);
-};
-</script>
+
 </body>
 </html>
