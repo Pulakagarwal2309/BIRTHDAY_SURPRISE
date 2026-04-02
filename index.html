@@ -1,110 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Vanshika 🎂</title>
-<style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  overflow:hidden; font-family:system-ui,-apple-system,sans-serif;
-  background:linear-gradient(135deg,#ff9a9e 0%,#fecfef 50%,#fad0c4 100%);
-  height:100vh; position:relative;
-}
-.ground {
-  position:absolute; bottom:0; left:0; width:100%; height:60px;
-  background:linear-gradient(to right, #8B4513, #D2691E); border-radius:30px 30px 0 0;
-}
-#panda {
-  position:absolute; bottom:30px; left:-150px; width:120px;
-  transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  filter: drop-shadow(3px 5px 10px rgba(0,0,0,0.3));
-}
-#panda.active { left:38% !important; bottom:80px; transform:rotate(5deg) scale(1.05); }
-#rope {
-  position:absolute; top:20px; left:50%; transform:translateX(-50%);
-  width:12px; height:180px; background:#4a4a4a; cursor:pointer;
-  border-radius:6px; box-shadow:0 0 15px rgba(0,0,0,0.4);
-}
-#rope.active { background:#ff4d6d; box-shadow:0 0 25px #ff4d6d; }
-#banner {
-  position:absolute; top:-250px; left:50%; transform:translateX(-50%);
-  background:linear-gradient(45deg, #ff4d6d, #ff6b9d); color:white;
-  padding:25px 50px; font-size:2.3em; border-radius:20px; text-align:center;
-  font-weight:700; transition:all 0.8s ease; box-shadow:0 15px 40px rgba(255,77,109,0.5);
-  letter-spacing:2px;
-}
-#banner.active { top:60px; transform:translateX(-50%) scale(1.05); }
-#message {
-  position:absolute; top:280px; width:90%; margin:0 5%; text-align:center;
-  font-size:1.35em; color:#333; opacity:0; transition:opacity 1.5s ease;
-  line-height:1.7; font-weight:500; padding:20px;
-}
-#message.active { opacity:1; }
-#help {
-  position:absolute; top:45%; left:50%; transform:translate(-50%,-50%);
-  background:rgba(255,77,109,0.95); color:white; padding:20px 30px;
-  border-radius:15px; font-size:1.2em; opacity:0; transition:opacity 0.5s;
-  text-align:center; box-shadow:0 10px 30px rgba(255,77,109,0.4);
-}
-.confetti {
-  position:absolute; width:12px; height:12px; border-radius:50%;
-  top:-20px; pointer-events:none; animation:fall 2.5s linear infinite;
-}
-@keyframes fall {
-  to { transform:translateY(120vh) rotate(1080deg) scale(0); }
-}
-.shake { animation:shake 5s ease-in-out; }
-@keyframes shake {
-  0%,100%{ transform:translateX(0); }
-  25%{ transform:translateX(-5px); }
-  75%{ transform:translateX(5px); }
-}
-</style>
+  <meta charset="UTF-8">
+  <title>Happy Birthday 🎉</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="ground"></div>
-<img id="panda" src="https://cdn-icons-png.flaticon.com/512/616/616408.png">
-<div id="rope"></div>
-<div id="banner">🎉 Happy Birthday Vamshika 🎉</div>
-<div id="message">
-✨ <b>Dear Vanshika</b> ✨<br><br>
-Aaj ka din sirf <b>tumhara</b> hai 💖<br>
-Tumhari smile duniya ko aur <b>beautiful</b> banati 🌸<br>
-Har khushi mile, har sapna <b>pura</b> ho ✨<br><br>
-You are <b>truly special</b> ❤️<br>
-Stay <b>khush</b> hamesha! 💫<br><br>
-💌 <b>Happy Birthday once again!</b> 💌
-</div>
 
-<script>
-let done=false;
-document.getElementById('rope').onclick=()=>{
-  if(done) return;
-  done=true;
-  
-  // Panda jumps in from back
-  document.getElementById('panda').classList.add('active');
-  
-  // Rope glows
-  document.getElementById('rope').classList.add('active');
-  document.getElementById('rope').classList.add('shake');
-  
-  // 🎵 Mobile-friendly sound + vibration
-  navigator.vibrate?.([200,100,200]);
-  let beep=new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAo');
-  beep.play().catch(()=>{}); // Silent fail on mobile
-  
-  // Banner drops
-  setTimeout(()=>document.getElementById('banner').classList.add('active'),300);
-  
-  // Message appears
-  setTimeout(()=>document.getElementById('message').classList.add('active'),1000);
-  
-  // 🎊 Confetti explosion
-  setTimeout(()=>{
-    for(let i=0;i<100;i++){
-      let c=document.createElement('div');
+<audio id="music" src="song.mp3"></audio>
+
+<div class="background"></div>
+
+<!-- Chocolate House -->
+<div class="house"></div>
+
+<!-- Rope -->
+<div id="rope"></div>
+
+<!-- Panda -->
+<div id="panda">🐼</div>
+
+<!-- Help Text -->
+<div id="helpText">Help! Pull the rope down 🪢</div>
+
+<!-- Banner -->
+<div id="banner">🎉 Happy Birthday Vamika 🎉</div>
+
+<!-- Message -->
+<div id="message"></div>
+
+<!-- Confetti -->
+<div id="confetti"></div>
+
+<script src="script.js"></script>
+</body>
+</html>      let c=document.createElement('div');
       c.className='confetti';
       c.style.left=Math.random()*100+'vw';
       c.style.background=`hsl(${i*3.6},100%,60%)`;
