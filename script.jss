@@ -1,93 +1,65 @@
 const panda = document.getElementById("panda");
 const rope = document.getElementById("rope");
-const helpText = document.getElementById("helpText");
+const help = document.getElementById("help");
 const banner = document.getElementById("banner");
-const message = document.getElementById("message");
+const msg = document.getElementById("msg");
 const music = document.getElementById("music");
 
-let dragged = false;
-
-/* Panda walking animation */
+/* Panda walk */
 setTimeout(() => {
-  panda.style.left = "200px";
+  panda.style.left = "250px";
 }, 1000);
 
-/* Panda jumping */
-let jumpCount = 0;
-let jumpInterval = setInterval(() => {
+/* Jump animation */
+let jumps = 0;
+let jumpAnim = setInterval(() => {
   panda.style.bottom = "120px";
-  setTimeout(() => {
-    panda.style.bottom = "80px";
-  }, 300);
+  setTimeout(() => panda.style.bottom = "50px", 300);
 
-  jumpCount++;
-  if (jumpCount >= 3) {
-    clearInterval(jumpInterval);
-    helpText.style.display = "block";
+  jumps++;
+  if (jumps == 3) {
+    clearInterval(jumpAnim);
+    help.style.display = "block";
   }
 }, 800);
 
-/* Drag rope */
-rope.addEventListener("mousedown", () => {
-  dragged = true;
-});
+/* Drag (Mobile + PC) */
+let dragging = false;
 
-document.addEventListener("mouseup", () => {
-  dragged = false;
-});
+rope.addEventListener("mousedown", () => dragging = true);
+rope.addEventListener("touchstart", () => dragging = true);
 
-document.addEventListener("mousemove", (e) => {
-  if (dragged) {
-    rope.style.height = e.clientY + "px";
+document.addEventListener("mouseup", () => dragging = false);
+document.addEventListener("touchend", () => dragging = false);
 
-    if (e.clientY > 300) {
-      triggerSurprise();
-    }
-  }
-});
+document.addEventListener("mousemove", moveRope);
+document.addEventListener("touchmove", moveRope);
 
-/* Surprise Trigger */
-function triggerSurprise() {
-  banner.style.top = "20px";
-  helpText.style.display = "none";
-  music.play();
-  typeMessage();
-  confettiEffect();
+function moveRope(e) {
+  if (!dragging) return;
+
+  let y = e.clientY || e.touches[0].clientY;
+  rope.style.height = y + "px";
+
+  if (y > 300) trigger();
 }
 
-/* Typing Message */
-const text = "You are truly special 🌸\nMay your day be filled with smiles, laughter and little surprises.\nStay the amazing person you are 💖\nHappy Birthday once again 🎂";
+/* Surprise */
+function trigger() {
+  banner.style.top = "20px";
+  help.style.display = "none";
+  music.play();
+  typeText();
+}
+
+/* Typing */
+let text = "You are a truly amazing person 🌸\nStay happy, keep smiling and keep shining ✨\nWishing you a day full of happiness 🎂";
 
 let i = 0;
-function typeMessage() {
+function typeText() {
   if (i < text.length) {
-    message.innerHTML += text.charAt(i);
+    msg.innerHTML += text[i];
     i++;
-    setTimeout(typeMessage, 40);
+    setTimeout(typeText, 40);
   }
-}
-
-/* Confetti */
-function confettiEffect() {
-  const confetti = document.getElementById("confetti");
-
-  for (let i = 0; i < 100; i++) {
-    let div = document.createElement("div");
-    div.style.position = "absolute";
-    div.style.width = "5px";
-    div.style.height = "5px";
-    div.style.background = "randomColor()";
-    div.style.left = Math.random() * window.innerWidth + "px";
-    div.style.top = "-10px";
-
-    confetti.appendChild(div);
-
-    let fall = setInterval(() => {
-      div.style.top = parseInt(div.style.top) + 5 + "px";
-    }, 30);
-  }
-}
-
-function randomColor() {
-  return "#" + Math.floor(Math.random()*16777215).toString(16);
 }
