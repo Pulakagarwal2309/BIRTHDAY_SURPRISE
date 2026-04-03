@@ -4,191 +4,61 @@ body {
   font-family: cursive;
 }
 
-/* 🌄 Background */
+/* Background */
 .bg {
+  position: fixed;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background: linear-gradient(#ffd6e0, #fff);
-  position: relative;
 }
 
-/* 🌳 Trees + Bush */
-.trees::before, .trees::after {
-  content: "";
-  position: absolute;
-  bottom: 50px;
-  width: 80px;
-  height: 120px;
-  background: green;
-  border-radius: 50%;
-}
-
-.trees::before { left: 300px; }
-.trees::after { left: 380px; }
-
-.trees {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 50px;
-  background: #4caf50;
-}
-
-/* 🏠 HOUSE */
-.house {
-  position: absolute;
-  bottom: 50px;
-  left: 50px;
-  width: 180px;
-  height: 130px;
-  background: #8b4513;
-  border-radius: 10px;
-}
-
-.roof {
-  position: absolute;
-  top: -70px;
-  left: -10px;
-  width: 0;
-  height: 0;
-  border-left: 100px solid transparent;
-  border-right: 100px solid transparent;
-  border-bottom: 70px solid #5c2c06;
-}
-
-.window {
-  position: absolute;
-  top: 30px;
-  left: 20px;
-  width: 40px;
-  height: 40px;
-  background: lightblue;
-  border: 3px solid #333;
-}
-
-.door {
-  position: absolute;
-  bottom: 0;
-  left: 70px;
-  width: 40px;
-  height: 70px;
-  background: #3b1f00;
-  border-radius: 10px;
-}
-
-/* 🐼 PANDA BODY */
+/* Panda */
 #panda {
   position: absolute;
   bottom: 50px;
-  left: -120px;
-  width: 100px;
-  animation: walk 6s linear forwards;
+  left: 50px;
+  font-size: 60px;
+  transition: 0.3s;
 }
 
-.body {
-  width: 80px;
-  height: 90px;
-  background: black;
-  border-radius: 40px;
-  margin: auto;
-}
-
-.face {
-  width: 70px;
-  height: 70px;
-  background: white;
-  border-radius: 50%;
-  position: absolute;
-  top: -30px;
-  left: 15px;
-}
-
-/* Eyes */
-.eye {
-  width: 15px;
-  height: 20px;
-  background: black;
-  position: absolute;
-  top: 20px;
-  border-radius: 50%;
-}
-.left { left: 10px; }
-.right { right: 10px; }
-
-.nose {
-  width: 8px;
-  height: 8px;
-  background: black;
-  position: absolute;
-  bottom: 15px;
-  left: 30px;
-  border-radius: 50%;
-}
-
-/* Hands */
-.hand {
-  width: 20px;
-  height: 40px;
-  background: black;
-  position: absolute;
-  top: 40px;
-  border-radius: 20px;
-  animation: dance 1s infinite alternate;
-}
-
-.left-hand { left: -10px; }
-.right-hand { right: -10px; }
-
-/* Legs */
-.leg {
-  width: 20px;
-  height: 30px;
-  background: black;
-  position: absolute;
-  bottom: -30px;
-  border-radius: 20px;
-  animation: walkLegs 0.5s infinite alternate;
-}
-
-.left-leg { left: 10px; }
-.right-leg { right: 10px; }
-
-/* 🪢 Rope */
+/* Rope */
 #rope {
   position: absolute;
-  right: 100px;
   top: 0;
-  width: 10px;
+  right: 80px;
+  width: 25px;
   height: 200px;
   background: brown;
+  z-index: 10;
 }
 
-/* 🆘 Help Text */
+/* Help */
 #help {
   position: absolute;
-  bottom: 200px;
-  right: 70px;
+  bottom: 150px;
+  left: 40px;
   background: white;
   padding: 10px;
   border-radius: 10px;
   display: none;
 }
 
-/* 🚶 Panda Walking */
-@keyframes walk {
-  0% { left: -120px; }
-  80% { left: 300px; }
-  100% { left: 300px; }
+/* Banner */
+#banner {
+  position: absolute;
+  top: -100px;
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  color: #ff4081;
+  transition: 0.5s;
 }
 
-/* 💃 Dance Hands */
-@keyframes dance {
-  0% { transform: rotate(-20deg); }
-  100% { transform: rotate(20deg); }
-}
-
-/* 👣 Legs Move */
-@keyframes walkLegs {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(5px); }
+/* Message */
+#msg {
+  position: absolute;
+  top: 120px;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
 }
